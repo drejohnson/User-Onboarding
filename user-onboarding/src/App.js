@@ -1,25 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from 'styled-components/macro';
+
+import GlobalStyles from './style/Global';
+import UserForm from './components/UserForm';
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem;
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyles />
+      <Wrapper>
+        <h1>User Onboarding Form</h1>
+        <UserForm />
+      </Wrapper>
+    </>
   );
 }
 
