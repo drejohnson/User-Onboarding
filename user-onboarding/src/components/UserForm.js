@@ -30,8 +30,9 @@ const CardInfoList = styled.div`
 
 const CardField = styled.div`
   display: flex;
-  flex-direction: ${props => (props.checkbox ? 'row' : 'column')};
+  flex-direction: ${props => (props.checkbox ? 'row-reverse' : 'column')};
   align-items: ${props => (props.checkbox ? 'center' : 'normal')};
+  justify-content: ${props => (props.checkbox ? 'flex-end' : 'normal')};
   margin-bottom: 1rem;
   label {
     margin-left: ${props => (props.checkbox ? '1rem' : '0')};
@@ -52,7 +53,6 @@ const CardField = styled.div`
 
 const CardInput = styled.input`
   padding: 7px 0;
-  width: 100%;
   font-family: inherit;
   font-size: 14px;
   border-top: 0;
@@ -102,47 +102,12 @@ const CustomField = ({ label, ...props }) => {
   const isCheckbox = props.type === 'checkbox';
   const isCountry = field.name === 'country';
   const isState = field.name === 'state';
-  if (isCountry) {
-    return (
-      <CardField select>
-        <label>
-          {label}
-          <CountryDropdown {...field} {...props} />
-        </label>
-        {meta.touched && meta.error ? (
-          <CardError>{meta.error}</CardError>
-        ) : null}
-      </CardField>
-    );
-  }
-
-  if (isState) {
-    return (
-      <CardField select>
-        <label>
-          {label}
-          <RegionDropdown {...field} {...props} />
-        </label>
-        {meta.touched && meta.error ? (
-          <CardError>{meta.error}</CardError>
-        ) : null}
-      </CardField>
-    );
-  }
-  return isCheckbox ? (
-    <CardField checkbox>
-      <CardCheckbox {...field} {...props} />
-      <label>
-        <span>{label}</span>
-      </label>
-      {meta.touched && meta.error ? <CardError>{meta.error}</CardError> : null}
-    </CardField>
-  ) : (
-    <CardField>
-      <label>
-        {label}
-        <CardInput {...field} {...props} />
-      </label>
+  return (
+    <CardField checkbox={isCheckbox}>
+      <label>{label}</label>
+      {!isState && !isCountry && <CardInput {...field} {...props} />}
+      {isCountry ? <CountryDropdown {...field} {...props} /> : null}
+      {isState ? <RegionDropdown {...field} {...props} /> : null}
       {meta.touched && meta.error ? <CardError>{meta.error}</CardError> : null}
     </CardField>
   );
