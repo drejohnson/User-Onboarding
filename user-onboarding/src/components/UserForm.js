@@ -36,6 +36,13 @@ const CardWrapper = styled.div`
   }
 `;
 
+const CardInfoList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-gap: 1rem;
+  margin-top: 2rem;
+`;
+
 const CardField = styled.div`
   display: flex;
   flex-direction: ${props => (props.checkbox ? 'row' : 'column')};
@@ -197,25 +204,29 @@ const UserForm = ({ values, status, handleChange }) => {
           <CardButton type='submit'>Submit</CardButton>
         </Form>
       </CardWrapper>
-      {users.map(user => (
-        <CardWrapper key={user.id}>
-          <p>
-            Name: <span>{user.name}</span>
-          </p>
-          <p>
-            Email: <span>{user.email}</span>
-          </p>
-          <p>
-            Country: <span>{user.country}</span>
-          </p>
-          <p>
-            State/Region: <span>{user.state}</span>
-          </p>
-          <p>
-            Has accepted terms: <span>{String(user.acceptTerms)}</span>
-          </p>
-        </CardWrapper>
-      ))}
+      <CardInfoList>
+        {users.map(user => (
+          <CardWrapper key={user.id}>
+            <figure>
+              <p>
+                Name: <span>{user.name}</span>
+              </p>
+              <p>
+                Email: <span>{user.email}</span>
+              </p>
+              <p>
+                Country: <span>{user.country}</span>
+              </p>
+              <p>
+                State/Region: <span>{user.state}</span>
+              </p>
+              <p>
+                Has accepted terms: <span>{String(user.acceptTerms)}</span>
+              </p>
+            </figure>
+          </CardWrapper>
+        ))}
+      </CardInfoList>
     </>
   );
 };
