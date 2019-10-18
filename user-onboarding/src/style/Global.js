@@ -33,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
   p {
-    font-family: 'EB Garamond', serif;
+    font-family: 'Lato', serif;
     padding: 0;
     margin: 0;
   }
