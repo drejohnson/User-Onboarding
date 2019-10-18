@@ -6,21 +6,6 @@ import * as Yup from 'yup';
 import styled from 'styled-components/macro';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 
-const StyledForm = styled.form`
-  align-self: center;
-  width: 100%;
-`;
-
-const StyledEntry = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1rem;
-`;
-
-const StyledButton = styled.button`
-  display: flex;
-`;
-
 const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
