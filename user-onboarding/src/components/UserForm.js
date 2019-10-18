@@ -34,10 +34,14 @@ const CardField = styled.div`
   align-items: ${props => (props.checkbox ? 'center' : 'normal')};
   justify-content: ${props => (props.checkbox ? 'flex-end' : 'normal')};
   margin-bottom: 1rem;
+  padding: ${props => (props.select ? '1rem' : '0')};
+  background: ${props => (props.select ? '#eee' : 'none')};
+
   label {
     margin-left: ${props => (props.checkbox ? '1rem' : '0')};
     margin-right: ${props => (props.checkbox ? '1rem' : '0')};
   }
+
   select {
     background: none;
     width: 100%;
@@ -100,12 +104,24 @@ const CardButton = styled.button`
 const CustomField = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   const isCheckbox = props.type === 'checkbox';
+  const isSelect = props.type === 'select';
   const isCountry = field.name === 'country';
   const isState = field.name === 'state';
+  const isRole = field.name === 'role';
   return (
-    <CardField checkbox={isCheckbox}>
+    <CardField checkbox={isCheckbox} select={isSelect}>
       <label>{label}</label>
-      {!isState && !isCountry && <CardInput {...field} {...props} />}
+      {isRole ? (
+        <select {...field} {...props}>
+          <option value='' label='Select your role' />
+          <option value='Project Manager' label='Project Manager' />
+          <option value='UX Designer' label='UX Designer' />
+          <option value='Frontend Developer' label='Frontend Developer' />
+          <option value='Backend Developer' label='Backend Developer' />
+          <option value='Fullstack Developer' label='Fullstack Developer' />
+        </select>
+      ) : null}
+      {!isRole && !isState && !isCountry && <CardInput {...field} {...props} />}
       {isCountry ? <CountryDropdown {...field} {...props} /> : null}
       {isState ? <RegionDropdown {...field} {...props} /> : null}
       {meta.touched && meta.error ? <CardError>{meta.error}</CardError> : null}
@@ -129,6 +145,12 @@ const UserForm = ({ values, status, handleChange }) => {
             name='confirmPassword'
             type='password'
             label='Confirm Password'
+          />
+          <CustomField
+            name='role'
+            type='select'
+            label='Role:'
+            value={values.role}
           />
           <CustomField
             name='country'
@@ -187,6 +209,7 @@ export default withFormik({
     email,
     password,
     confirmPassword,
+    role,
     country,
     state,
     acceptTerms,
@@ -196,6 +219,7 @@ export default withFormik({
       email: email || '',
       password: password || '',
       confirmPassword: confirmPassword || '',
+      role: role || '',
       country: country || 'United States',
       state: state || '',
       acceptTerms: acceptTerms || false,
